@@ -12,17 +12,17 @@ diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp b/xbmc/cores/Vi
 index 582d25b..5f936a8 100644
 --- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
 +++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
-@@ -1899,6 +1899,10 @@ void CAMLCodec::Reset()
- 
- bool CAMLCodec::AddData(uint8_t *pData, size_t iSize, double dts, double pts)
- {
+@@ -1526,6 +1526,10 @@ bool CAMLCodec::OpenDecoder(CDVDStreamInfo &hints)
+   m_frameSizes.clear();
+   m_frameSizeSum = 0;
+
 +  // bandfix
 +  SysfsUtils::SetString("/sys/class/amhdmitx/amhdmitx0/debug", "round1");
 +  CLog::Log(LOGDEBUG, "bandfix AMLCodec.cpp");
 +
-   if (!m_opened || !pData)
-     return false;
- 
+   if (!OpenAmlVideo(hints))
+   {
+     CLog::Log(LOGERROR, "CAMLCodec::OpenDecoder - cannot open amlvideo device");
 diff --git a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp b/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
 index 59d27f3..0907689 100644
 --- a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
